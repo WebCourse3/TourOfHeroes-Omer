@@ -1,0 +1,22 @@
+{
+  "name": "tourohheroes-omer",
+  "version": "1.0.0",
+  "description": "tour of heroes website by omer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebCourse3/TourOfHeroes-Omer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebCourse3/TourOfHeroes-Omer/issues"
+  },
+  "homepage": "https://github.com/WebCourse3/TourOfHeroes-Omer#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
