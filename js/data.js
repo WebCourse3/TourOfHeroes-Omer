@@ -20,4 +20,4 @@ var heroes = [
 	}
 ];
 
-export {heroes};
+module.exports.hero_list = heroes;

@@ -1,6 +1,8 @@
-var router  = express.Router();
-const Controller = require('/js/actions');
-let ctrl = new Controller();
+let express = require("express");
+let router  = express.Router();
+
+const Controller = require('./actions');
+let ctrl = new Controller.Controller();
 
 router.get('/', function(req, res){
 	res.send(ctrl.getHeroes());
@@ -24,24 +26,22 @@ router.post('/', function (req,res) {
 
 router.get('/:id', function(req, res){
 	let id = req.params.id;
-	res.send(ctrl.getHeroByID(id));
+	res.send(ctrl.getHeroById(id));
 });
 
 router.put('/:id', function(req, res){
 	let id = req.params.id;
-	let name = req.param("name");
+	let new_name = req.query.name;
 
-	ctrl.updateHero(id,name);
+    let hero = ctrl.getHeroById(id);
+	ctrl.updateHero(hero,new_name);
 	res.send(ctrl.getHeroes());
 });
 
 router.delete('/:id', function (req, res) {
-	var id = req.params.id;
-	for (var i = 0; i < heroes.length; i++) {
-		if (heroes[i].id == id){
-			heroes.splice(i,1);
-		}
-	}
-	res.send(heroes);
+    let hero = ctrl.getHeroById(req.query.id);
+    ctrl.delHero(hero);
+	res.send(ctrl.getHeroes());
 });
-module.exports(router);
+
+module.exports = router;
