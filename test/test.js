@@ -1,12 +1,11 @@
-import * as server from '/modules/my-module.js';
+let hero_list = require('../js/data');
 
-
-var assert = require('assert');
+let assert = require('assert');
 
 describe('Array', function() {
-	describe('Heroes JSON Exists', function() {
+	describe('Heroes Json has data', function() {
 		it('count should be above 0', function() {
-			assert.notEqual(0,heroes.length)
+			assert.notEqual(0,hero_list.hero_list.length)
 		});
 	});
 });
