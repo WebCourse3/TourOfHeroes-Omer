@@ -11,7 +11,7 @@ class Controller {
 
 	getHeroById(id) {
 		for (let i = 0; i < this.dt.length; i++) {
-			if (this.dt[i].id === id) {
+			if (parseInt(this.dt[i].id) === id) {
 				return this.dt[i];
 			}
 		}
@@ -32,14 +32,16 @@ class Controller {
 		}
 	}
 
-	delHero(hero) {
+	delHero(name) {
+		let hero = this.getHeroByName(name);
 		let index =  this.dt.indexOf(hero);
 		this.dt.splice(index,1);
 	}
 
-	updateHero(hero,new_name){
-	    let index =  this.dt.indexOf(hero);
-	    this.dt[index].name = new_name;
+	updateHero(id,new_name){
+		let hero = this.getHeroById(id);
+	    hero.name = new_name;
 	}
 }
-module.exports.Controller = Controller;
+
+module.exports.controller = Controller;

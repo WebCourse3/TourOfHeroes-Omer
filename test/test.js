@@ -1,12 +1,18 @@
 const cont = require('../js/actions');
-let ctrl = new cont.Controller();
+let ctrl = new cont.controller();
 
 let assert = require('assert');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
+let sinon = require('sinon');
+
 let original_count = ctrl.getHeroes().length;
+
+beforeEach('before', () => {
+	ctrl =  new cont.controller();
+});
 
 describe('Array', function () {
 	describe('Heroes Json has data', function () {
@@ -25,7 +31,7 @@ describe('Array', function () {
 				assert.equal(original_count + 1, n_count);
 			});
 			it('Add a hero - already exist', function () {
-				ctrl.addHero('1000', 'test unit');
+				ctrl.addHero(1000, 'test unit');
 				let count = ctrl.getHeroes().length;
 				assert.equal(count , ctrl.getHeroes().length);
 			});
@@ -33,20 +39,40 @@ describe('Array', function () {
 
 		describe('Delete Function',function () {
 			it("Delete hero 'test unit'", function () {
-				let hero = ctrl.getHeroByName("test unit");
+				let Stubconst = {};
+				Stubconst.getHeroByName = sinon.stub();
+				let output = { "id": "1000", "name": "test unit" };
+				Stubconst.getHeroByName.withArgs("test unit").returns(output);
 
-				ctrl.delHero(hero);
+				ctrl.getHeroByName = Stubconst.getHeroByName;
+				ctrl.delHero("test unit");
+
 
 				assert.equal(ctrl.getHeroes().length,original_count);
 			});
 		});
 
-		describe('Update Functino',function () {
+		describe('Update Function',function () {
 			it('Update a hero', function () {
-				let hero = ctrl.getHeroByName('omer');
-				ctrl.updateHero(hero, 'kukuflitzu');
+				const Stubcosnt = {};
+				Stubcosnt.getHeroById = sinon.stub();
+				let output = { "id": "2", "name": "Omer" };
+				Stubcosnt.getHeroById.withArgs(2).returns(output);
+				ctrl.getHeroById = Stubcosnt.getHeroById;
+				ctrl.updateHero(2, 'kukuflitzu');
 
-				assert.equal('kukuflitzu', hero.name);
+
+				assert.equal(output.name, 'kukuflitzu');
+			});
+		});
+		describe('Get Functions',function () {
+			it('Get hero by Id', function () {
+				let hero = ctrl.getHeroById(1);
+				assert.notEqual(hero, undefined);
+			});
+			it('Get hero by Name', function () {
+				let hero = ctrl.getHeroByName("Saar");
+				assert.notEqual(hero, undefined);
 			});
 		});
 

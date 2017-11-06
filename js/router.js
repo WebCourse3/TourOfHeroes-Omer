@@ -1,8 +1,9 @@
 let express = require("express");
 let router  = express.Router();
 
+
 const cont = require('./actions');
-let ctrl = new cont.Controller();
+let ctrl =  new cont.controller();
 
 router.get('/', function(req, res){
 	res.send(ctrl.getHeroes());
@@ -40,8 +41,7 @@ router.put('/:id', function(req, res){
 	let id = req.params.id;
 	let new_name = req.query.name;
 
-    let hero = ctrl.getHeroById(id);
-	ctrl.updateHero(hero,new_name);
+	ctrl.updateHero(id,new_name);
 	res.send(ctrl.getHeroes());
 });
 
