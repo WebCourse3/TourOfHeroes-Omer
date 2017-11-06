@@ -1,8 +1,8 @@
 let express = require("express");
 let router  = express.Router();
 
-const Controller = require('./actions');
-let ctrl = new Controller.Controller();
+const cont = require('./actions');
+let ctrl = new cont.Controller();
 
 router.get('/', function(req, res){
 	res.send(ctrl.getHeroes());
@@ -16,8 +16,15 @@ router.delete('/', function (req,res) {
 });
 
 router.post('/', function (req,res) {
-	let id = req.body.id;
-	let name = req.body.name;
+	let id,name;
+	try{
+		id = parseInt(req.body.id);
+		name = req.body.name;
+	}
+	catch (e){
+		console.log(e);
+		res.send("bad JSON");
+	}
 
 	ctrl.addHero(id,name);
 

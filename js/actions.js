@@ -26,7 +26,10 @@ class Controller {
 	}
 
 	addHero(id,name) {
-		this.dt.push({"id": id, "name": name});
+		let hero = this.getHeroById(id);
+		if (this.dt.indexOf(hero) === -1) {
+			this.dt.push({"id": id, "name": name});
+		}
 	}
 
 	delHero(hero) {

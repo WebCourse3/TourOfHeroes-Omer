@@ -1,22 +1,22 @@
-var heroes = [
+let heroes = [
 	{
 		"id" : "1",
-		"name" : "Saar Ziv"
+		"name" : "Saar"
 
 	},
 	{
 		"id" : "2",
-		"name" : "Omer Roth"
+		"name" : "Omer"
 
 	},
 	{
 		"id" : "3",
-		"name" : "AvivMahan"
+		"name" : "Aviv"
 
 	},
 	{
 		"id" : "4",
-		"name" : "Tal Natanya"
+		"name" : "Tal"
 	}
 ];
 
