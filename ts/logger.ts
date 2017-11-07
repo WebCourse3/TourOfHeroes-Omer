@@ -1,6 +1,7 @@
-import {Configuration,Color} from './Configurations';
+import {Configuration,Color,Level} from './Configurations';
+import * as fs from 'fs';
 
-class Logger {
+export class Logger {
 	name: string;
 	config: Configuration;
 
@@ -9,22 +10,22 @@ class Logger {
 		this.config = configuration;
 	}
 
-	public log(level: string, ...strings: Array<string>) {
+	public log(level: Level, ...strings: Array<string>) {
 		let options = {
-			"debug"   : this.debug.apply(this,strings),
-			"info"    : this.info.apply(this,strings),
-			"warning" : this.warning.apply(this,strings),
-			"error"   : this.error.apply(this,strings)
+			"debug"   : this.debug,
+			"info"    : this.info,
+			"warning" : this.warning,
+			"error"   : this.error
 		};
 
-		console.log(options[level]);
+		options[level].apply(this,strings);
 	}
 
 	public debug(...strings: Array<string>) {
 		if (this.config.console) {
 			this.debugToConsole(strings);
 		}
-		else {
+		if (this.config.file) {
 			this.debugToFile(strings);
 		}
 	}
@@ -44,14 +45,18 @@ class Logger {
 	}
 
 		private debugToFile(strings: Array<string>) {
-		// write to file
+			strings.forEach((msg) => {
+				fs.appendFile(__dirname + 'test.log', `DEBUG: ${msg}\n`, function (err) {
+					if (err) throw err;
+				});
+			})
 	}
 
 	public info(...strings: Array<string>) {
 		if (this.config.console) {
 			this.infoToConsole(strings);
 		}
-		else {
+		if (this.config.file) {
 			this.infoToFile(strings);
 		}
 	}
@@ -71,14 +76,18 @@ class Logger {
 	}
 
 		private infoToFile(strings: Array<string>) {
-		// write to file
+			strings.forEach((msg) => {
+				fs.appendFile(__dirname + 'test.log', `INFO: ${msg}\n`, function (err) {
+					if (err) throw err;
+				});
+			})
 	}
 
 	public warning(...strings: Array<string>) {
 		if (this.config.console) {
 			this.warningToConsole(strings);
 		}
-		else {
+		if (this.config.file) {
 			this.warningToFile(strings);
 		}
 	}
@@ -98,14 +107,18 @@ class Logger {
 		}
 
 		private warningToFile(strings: Array<string>) {
-		// write to file
+			strings.forEach((msg) => {
+				fs.appendFile(__dirname + 'test.log', `WARN: ${msg}\n`, function (err) {
+					if (err) throw err;
+				});
+			})
 	}
 
 	public error(...strings: Array<string>) {
 		if (this.config.console) {
 			this.errorToConsole(strings);
 		}
-		else {
+		if (this.config.file) {
 			this.errorToFile(strings);
 		}
 	}
@@ -124,15 +137,13 @@ class Logger {
 		}
 
 		private errorToFile(strings: Array<string>) {
-			// write to file
+			strings.forEach((msg) => {
+				fs.appendFile(__dirname + 'test.log', `ERROR: ${msg} \n`, function (err) {
+					if (err) throw err;
+				});
+			})
 		}
-
+	public setConfiguration(conf:Configuration) {
+		this.config = conf;
+	}
 }
-
-let logger = new Logger('kaki', {console: true, file: false, colors: true, logLevel: true});
-
-logger.debug('hello world');
-logger.info('hello world');
-logger.warning('hello world');
-logger.error('hello world');
-logger.log('debug', 'kukuflitzu', 'my', 'life');

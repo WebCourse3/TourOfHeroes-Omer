@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Configurations_1 = require("./Configurations");
+var fs = require("fs");
 var Logger = (function () {
     function Logger(name, configuration) {
         this.name = name;
@@ -12,12 +13,12 @@ var Logger = (function () {
             strings[_i - 1] = arguments[_i];
         }
         var options = {
-            "debug": this.debug.apply(this, strings),
-            "info": this.info.apply(this, strings),
-            "warning": this.warning.apply(this, strings),
-            "error": this.error.apply(this, strings)
+            "debug": this.debug,
+            "info": this.info,
+            "warning": this.warning,
+            "error": this.error
         };
-        console.log(options[level]);
+        options[level].apply(this, strings);
     };
     Logger.prototype.debug = function () {
         var strings = [];
@@ -27,7 +28,7 @@ var Logger = (function () {
         if (this.config.console) {
             this.debugToConsole(strings);
         }
-        else {
+        if (this.config.file) {
             this.debugToFile(strings);
         }
     };
@@ -44,7 +45,12 @@ var Logger = (function () {
         }
     };
     Logger.prototype.debugToFile = function (strings) {
-        // write to file
+        strings.forEach(function (msg) {
+            fs.appendFile(__dirname + 'test.log', "DEBUG: " + msg + "\n", function (err) {
+                if (err)
+                    throw err;
+            });
+        });
     };
     Logger.prototype.info = function () {
         var strings = [];
@@ -54,7 +60,7 @@ var Logger = (function () {
         if (this.config.console) {
             this.infoToConsole(strings);
         }
-        else {
+        if (this.config.file) {
             this.infoToFile(strings);
         }
     };
@@ -71,7 +77,12 @@ var Logger = (function () {
         }
     };
     Logger.prototype.infoToFile = function (strings) {
-        // write to file
+        strings.forEach(function (msg) {
+            fs.appendFile(__dirname + 'test.log', "INFO: " + msg + "\n", function (err) {
+                if (err)
+                    throw err;
+            });
+        });
     };
     Logger.prototype.warning = function () {
         var strings = [];
@@ -81,7 +92,7 @@ var Logger = (function () {
         if (this.config.console) {
             this.warningToConsole(strings);
         }
-        else {
+        if (this.config.file) {
             this.warningToFile(strings);
         }
     };
@@ -98,7 +109,12 @@ var Logger = (function () {
         }
     };
     Logger.prototype.warningToFile = function (strings) {
-        // write to file
+        strings.forEach(function (msg) {
+            fs.appendFile(__dirname + 'test.log', "WARN: " + msg + "\n", function (err) {
+                if (err)
+                    throw err;
+            });
+        });
     };
     Logger.prototype.error = function () {
         var strings = [];
@@ -108,7 +124,7 @@ var Logger = (function () {
         if (this.config.console) {
             this.errorToConsole(strings);
         }
-        else {
+        if (this.config.file) {
             this.errorToFile(strings);
         }
     };
@@ -125,14 +141,17 @@ var Logger = (function () {
         }
     };
     Logger.prototype.errorToFile = function (strings) {
-        // write to file
+        strings.forEach(function (msg) {
+            fs.appendFile(__dirname + 'test.log', "ERROR: " + msg + " \n", function (err) {
+                if (err)
+                    throw err;
+            });
+        });
+    };
+    Logger.prototype.setConfiguration = function (conf) {
+        this.config = conf;
     };
     return Logger;
 }());
-var logger = new Logger('kaki', { console: true, file: false, colors: true, logLevel: true });
-logger.debug('hello world');
-logger.info('hello world');
-logger.warning('hello world');
-logger.error('hello world');
-logger.log('debug', 'kukuflitzu', 'my', 'life');
+exports.Logger = Logger;
 //# sourceMappingURL=logger.js.map
