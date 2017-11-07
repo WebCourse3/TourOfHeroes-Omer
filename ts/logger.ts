@@ -10,15 +10,15 @@ export class Logger {
 		this.config = configuration;
 	}
 
-	public log(level: Level, ...strings: Array<string>) {
+	public log(level?: Level, ...strings: Array<string>) {
 		let options = {
 			"debug"   : this.debug,
 			"info"    : this.info,
 			"warning" : this.warning,
 			"error"   : this.error
 		};
-
-		options[level].apply(this,strings);
+		let lvl = level || this.config.logLevel;
+		options[lvl].apply(this,strings);
 	}
 
 	public debug(...strings: Array<string>) {

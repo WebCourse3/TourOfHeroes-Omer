@@ -25,7 +25,7 @@ logger.warning("This is:","Warning");
 console.log("----------");
 logger.error("this is:","Error");
 console.log("----------");
-logger.log("error", "this","is","sparta!");
+logger.log(undefined,"this","is","sparta!");
 
 conf = new con.Configuration(console = true, file = false, colors = false, logLevel = con.Level.error);
 logger.setConfiguration(conf);

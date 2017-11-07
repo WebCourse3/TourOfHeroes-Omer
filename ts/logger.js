@@ -18,7 +18,8 @@ var Logger = (function () {
             "warning": this.warning,
             "error": this.error
         };
-        options[level].apply(this, strings);
+        var lvl = level || this.config.logLevel;
+        options[lvl].apply(this, strings);
     };
     Logger.prototype.debug = function () {
         var strings = [];

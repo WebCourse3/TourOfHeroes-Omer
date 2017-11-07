@@ -2,7 +2,7 @@ export class Configuration {
 	console: Boolean;
 	file: Boolean;
 	colors: Boolean;
-	logLevel: string;
+	logLevel: Level;
 
 	constructor(console:boolean,file:boolean, colors: boolean, logLevel:Level) {
 		this.console = console;
