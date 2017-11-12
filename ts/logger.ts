@@ -143,6 +143,7 @@ export class Logger {
 				});
 			})
 		}
+
 	public setConfiguration(conf:Configuration) {
 		this.config = conf;
 	}
